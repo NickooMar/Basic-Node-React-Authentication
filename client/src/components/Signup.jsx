@@ -9,8 +9,6 @@ const Signup = () => {
   });
 
   const handleInputChange = (event) => {
-    console.log(event.target.name);
-    console.log(event.target.value);
     setUser({
       ...user,
       [event.target.name]: event?.target?.value,
@@ -21,7 +19,24 @@ const Signup = () => {
     e.preventDefault();
     const { fname, lname, email, password } = user;
 
-    console.log(fname, lname, email, password);
+    fetch('http://localhost:5000/register', {
+      method: "POST",
+      crossDomain: true,
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        "Acces-Control-Allow-Origin": "*",
+      },
+      body: JSON.stringify({
+        fname,
+        lname,
+        email,
+        password
+      }),
+    }).then((res) => res.json())
+      .then((data) => {
+        console.log(data, 'User Register')
+      })
   }
 
   return (
